@@ -25,6 +25,8 @@ app.post("/encode", upload.single("image"), encodeTextInImage)
 app.post("/decode",  upload.single("image"), decodeTextInImage)
 
 
-const port = Number(process.env.PORT) ?? 3000
+const port = Number(process.env.PORT) || 5050
+
+console.log(port)
 
 app.listen(port, "0.0.0.0", ()=>console.log("Server started on Port", port))

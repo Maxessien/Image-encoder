@@ -1,5 +1,6 @@
 import sharp from "sharp";
 
+
 /**
  *
  * @param {String} imagePath - Path to image you want to encode
@@ -73,5 +74,7 @@ async function decodeImage(imagePath: string) {
 
   return decodedMessage;
 }
+
+
 
 export { decodeImage, encodeImage };

@@ -1,0 +1,41 @@
+import { useState } from "react";
+import "./assets/variables.css";
+import EncodeSection from "./components/EncodeSection";
+import DecodeSection from "./components/DecodeSection";
+
+const App = () => {
+  const [currentSection, setCurrentSection] = useState<"encode" | "decode">(
+    "encode",
+  );
+  return (
+    <main className="bg-(--white) shadow-[0px_0px_10px_-6px_black] w-full max-w-200 h-max mx-auto py-3 my-5 rounded-md">
+      <header className="mb-3">
+        <h1 className="text-xl text-center mb-2 text-(--black-light) font-medium">
+          Image Text Encoder
+        </h1>
+        <p className="text-base text-center text-(--black-light) font-medium">
+          Hide and reveal message in your images
+        </p>
+      </header>
+
+      <div className="mb-3 flex justify-center px-2 w-full items-center gap-3">
+        <button
+          onClick={() => setCurrentSection("encode")}
+          className={`text-base text-center flex-1 ${currentSection === "encode" ? "border-b-2 border-b-(--blue)" : ""} py-3 text-(--black-light) font-medium`}
+        >
+          Encode
+        </button>
+        <button
+          onClick={() => setCurrentSection("decode")}
+          className={`text-base text-center flex-1 ${currentSection === "decode" ? "border-b-2 border-b-(--blue)" : ""} py-3 text-(--black-light) font-medium`}
+        >
+          Decode
+        </button>
+      </div>
+      {currentSection === "encode" && <EncodeSection />}
+      {currentSection === "decode" && <DecodeSection />}
+    </main>
+  );
+};
+
+export default App;
