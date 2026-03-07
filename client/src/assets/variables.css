@@ -5,17 +5,3 @@
     --black-light: rgb(47, 47, 47);
     --blue: rgb(0, 38, 98);
 }
-
-button:hover{
-    cursor: pointer;
-}
-
-button{
-    transition: all 150ms ease;
-}
-
-body{
-    height: 100vh;
-    min-height: 40rem;
-    background: var(--white-dark);
-}

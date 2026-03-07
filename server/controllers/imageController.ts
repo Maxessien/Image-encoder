@@ -4,6 +4,7 @@ import { decodeImage, encodeImage } from "../utils/encoder.js";
 
 const encodeTextInImage = async(req: Request, res: Response)=>{
     try {
+        console.log("Encoding...")
         const {text} = req.body
         const buffer = await encodeImage(req.file?.path ?? "", text)
         res.set("Content-Type", "image/png")
@@ -16,6 +17,7 @@ const encodeTextInImage = async(req: Request, res: Response)=>{
 
 const decodeTextInImage = async (req:Request, res: Response) => {
     try {
+        console.log("Decoding...")
         const text = await decodeImage(req.file?.path ?? "")
         return res.status(200).json({text: text})
     } catch (err) {

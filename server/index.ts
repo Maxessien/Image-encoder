@@ -1,7 +1,7 @@
-import type { Multer } from "multer";
-import express, { type Request, type Response } from "express"
-import { decodeTextInImage, encodeTextInImage } from "./controllers/imageController.js";
+import express, { type Request, type Response } from "express";
 import multer from "multer";
+import { join } from "path";
+import { decodeTextInImage, encodeTextInImage } from "./controllers/imageController.js";
 
 
 declare global {
@@ -19,8 +19,12 @@ const app = express()
 app.use(express.json())
 
 
-app.get("/", async(req: Request, res: Response)=>res.send("../dist/index.html"))
+app.use(express.static(join(process.cwd(), "../client/dist")));
 
+// Serve SPA entry file for direct browser access.
+app.get("/", async(req: Request, res: Response)=>res.sendFile(join(process.cwd(), "../client/dist/index.html")))
+
+// Accept multipart image uploads for steganography operations.
 app.post("/encode", upload.single("image"), encodeTextInImage)
 app.post("/decode",  upload.single("image"), decodeTextInImage)
 

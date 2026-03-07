@@ -2,13 +2,14 @@ import { useState } from "react";
 import "./assets/variables.css";
 import EncodeSection from "./components/EncodeSection";
 import DecodeSection from "./components/DecodeSection";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   const [currentSection, setCurrentSection] = useState<"encode" | "decode">(
-    "encode",
+    "decode",
   );
   return (
-    <main className="bg-(--white) shadow-[0px_0px_10px_-6px_black] w-full max-w-200 h-max mx-auto py-3 my-5 rounded-md">
+    <section className="bg-(--white) shadow-[0px_0px_10px_-6px_black] w-full max-w-200 h-max mx-auto py-3 my-5 rounded-md">
       <header className="mb-3">
         <h1 className="text-xl text-center mb-2 text-(--black-light) font-medium">
           Image Text Encoder
@@ -34,7 +35,13 @@ const App = () => {
       </div>
       {currentSection === "encode" && <EncodeSection />}
       {currentSection === "decode" && <DecodeSection />}
-    </main>
+      <ToastContainer
+        position="top-center"
+        pauseOnHover
+        newestOnTop
+        theme="colored"
+      />
+    </section>
   );
 };
 

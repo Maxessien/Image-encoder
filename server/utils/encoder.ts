@@ -12,6 +12,7 @@ async function encodeImage(imagePath: string, message: string) {
     data: originalBytes,
     info: { width, height, channels },
   } = await sharp(imagePath).raw().toBuffer({ resolveWithObject: true });
+  // Keep the first 512 bytes untouched; embed data after this offset.
   const imageBytes = Buffer.from(originalBytes.subarray(512));
   let wordBits = "";
 
@@ -20,6 +21,7 @@ async function encodeImage(imagePath: string, message: string) {
 
   const messageLength = wordBits.length.toString(2).padStart(32, "0");
 
+  // Prefix payload with 32-bit length, then write one bit per pixel byte.
   const fullEncoding = messageLength + wordBits;
   for (let i = 0; i < fullEncoding.length; i++) {
     let currentByteBits = imageBytes?.[i]?.toString(2).padStart(8, "0");
@@ -47,10 +49,12 @@ async function decodeImage(imagePath: string) {
   const { data: originalBytes } = await sharp(imagePath)
     .raw()
     .toBuffer({ resolveWithObject: true });
+  // Read from the same offset used while encoding.
   const imageBytes = Buffer.from(originalBytes.subarray(512));
 
   let messageLength = "";
 
+  // First 32 LSBs store payload bit-length.
   for (let i = 0; i < 32; i++) {
     let currentByteBits = imageBytes?.[i]?.toString(2).padStart(8, "0");
     const modifiedBit = currentByteBits?.[currentByteBits.length - 1];
@@ -61,6 +65,7 @@ async function decodeImage(imagePath: string) {
 
   let message = "";
 
+  // Next bits represent the actual encoded message payload.
   for (let i = 32; i < decodedMessageLength + 32; i++) {
     let currentByteBits = imageBytes?.[i]?.toString(2).padStart(8, "0");
     const modifiedBit = currentByteBits?.[currentByteBits.length - 1];
@@ -78,3 +83,4 @@ async function decodeImage(imagePath: string) {
 
 
 export { decodeImage, encodeImage };
+
