@@ -46,66 +46,72 @@ const EncodeSection = () => {
   });
 
   return (
-    <section className="space-y-3 w-full flex flex-col items-center">
-      <div className="flex flex-col items-center gap-2 w-full">
-        <h2 className="text-lg text-(--black-light) font-medium">
+    <section className="w-full flex flex-col">
+        <h2 className="text-[18px] text-(--black-light) font-medium text-center py-4 pb-4 sm:text-[18px] md:text-[20px] lg:text-[30px]">
           Encode Message
         </h2>
-        <button
-          onClick={() => imageInputRef?.current?.click()}
-          className="w-full hover:bg-(--white-dark) max-w-80 px-4 py-1.5 text-base text-(--black) rounded-md border-2 border-(--black-light) font-medium"
-        >
-          Select Image...
-        </button>
-        <input
-          ref={imageInputRef}
-          onChange={({ target: { files } }) => {
-            setFormInfo((state) => ({ ...state, image: files ?? [] }));
-          }}
-          className="hidden"
-          type="file"
-        />
-        <div className="w-full aspect-video max-w-100 border-2 border-(--black-light) rounded-md overflow-hidden">
-          <img
-            src={
-              formInfo.image?.length > 0 && formInfo.image instanceof FileList
-                ? URL.createObjectURL(formInfo.image?.[0])
-                : ""
-            }
-            className="object-cover w-full h-full object-center"
-            alt={
-              formInfo.image?.length > 0 && formInfo.image instanceof FileList
-                ? formInfo.image?.[0].name
-                : "image"
-            }
-          />
+
+        <div className="sm:flex-row md:flex gap-4 px-6 ">
+            <div className="flex flex-col gap-3 flex-1 items-center">
+              <button
+                onClick={() => imageInputRef?.current?.click()}
+                className="w-full max-w-80 px-4 py-1.5 bg-teal-500 hover:bg-teal-600 text-base text-white rounded-md font-medium"
+              >
+                Select Image...
+              </button>
+              <input
+                ref={imageInputRef}
+                onChange={({ target: { files } }) => {
+                  setFormInfo((state) => ({ ...state, image: files ?? [] }));
+                }}
+                className="hidden"
+                type="file"
+              />
+              <div className="w-full h-52 border-2 border-[#ddd] border-dashed rounded-md overflow-hidden">
+                <img
+                  src={
+                    formInfo.image?.length > 0 && formInfo.image instanceof FileList
+                      ? URL.createObjectURL(formInfo.image?.[0])
+                      : ""
+                  }
+                  className="object-cover w-full h-full object-center"
+                  alt={
+                    formInfo.image?.length > 0 && formInfo.image instanceof FileList
+                      ? formInfo.image?.[0].name
+                      : "image"
+                  }
+                />
+              </div>
+            </div>
+            <div className="flex-1">
+              <p className="sm:text-lg pt-[20px] text-(--black-light) font-medium w-full max-w-100 text-left pt-1 pb-4">
+                Message To Encode:
+              </p>
+              <textarea
+                onChange={({ target: { value } }) =>
+                  setFormInfo((state) => ({ ...state, text: value }))
+                }
+                value={formInfo.text}
+                placeholder="Enter your secret message here..."
+                name="encode_text"
+                id="encode_text_id"
+                className="h-52 w-full resize-none border-2 border-[#ddd] outline-none text-base font-medium text-(--black) px-3 py-2 bg-gray-50 placeholder:text-gray-600 rounded-md]"
+              ></textarea>
         </div>
       </div>
-      <div className="space-y-2 w-full max-w-120">
-        <p className="text-lg text-(--black-light) font-medium">
-          Message To Encode:
-        </p>
-        <textarea
-          onChange={({ target: { value } }) =>
-            setFormInfo((state) => ({ ...state, text: value }))
-          }
-          value={formInfo.text}
-          placeholder="Enter your secret message here..."
-          name="encode_text"
-          id="encode_text_id"
-          className="w-full h-25 border-2 border-(--black-light) text-base font-medium text-(--black) px-3 py-2 bg-gray-50 placeholder:text-gray-600 rounded-md"
-        ></textarea>
+
+      <div className="mt-5 text-center px-6">
         <p className="text-base text-(--black-light) font-medium">
           You can hide up to 1500 characters
         </p>
-      </div>
       <button
         disabled={isPending || !validateFormInfo()}
         onClick={() => mutateAsync()}
-        className="text-base text-(--white) disabled:opacity-65 w-full max-w-80 px-3 py-2 rounded-md bg-(--blue) mx-auto font-medium"
+        className="text-base text-(--white) disabled:opacity-65 w-full max-w-80 px-3 py-2 rounded-md bg-teal-500 mx-auto font-medium"
       >
         Encode & Save
       </button>
+      </div>
     </section>
   );
 };
