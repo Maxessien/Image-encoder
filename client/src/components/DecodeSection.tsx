@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -35,8 +35,10 @@ const DecodeSection = () => {
       setDisplayText((state) => ({ ...state, decoded: data.text }));
       toast.success("Image Decoded");
     },
-    onError: () => {
-      toast.error("Decoding Failed");
+    onError: (err) => {
+      if ((err as AxiosError<{message: string}>).response?.data?.message === "Unrecognised encoding")
+        toast.error("No message has been encoded into this image");
+      else toast.error("Decoding Failed");
     },
   });
 
