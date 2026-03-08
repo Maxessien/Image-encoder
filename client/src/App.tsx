@@ -9,9 +9,9 @@ const App = () => {
     "decode",
   );
   return (
-    <section className="bg-(--white) shadow-[0px_0px_10px_-6px_black] w-full max-w-200 h-max mx-auto py-3 my-5 rounded-md">
+    <section className="bg-(--white) shadow-[0px_0px_10px_-6px_black] w-full max-w-200 h-max mx-auto py-7 my-5 rounded-md">
       <header className="mb-3">
-        <h1 className="text-xl text-center mb-2 text-(--black-light) font-medium">
+        <h1 className="text-center mb-2 text-(--black-light) font-medium sm: text-[20px] md: text-[30px] lg: text-[40px]">
           Image Text Encoder
         </h1>
         <p className="text-base text-center text-(--black-light) font-medium">
@@ -19,16 +19,16 @@ const App = () => {
         </p>
       </header>
 
-      <div className="mb-3 flex justify-center px-2 w-full items-center gap-3">
+      <div className="w-full px-5 flex gap-5 ">
         <button
           onClick={() => setCurrentSection("encode")}
-          className={`text-base text-center flex-1 ${currentSection === "encode" ? "border-b-2 border-b-(--blue)" : ""} py-3 text-(--black-light) font-medium`}
+          className={`text-base text-teal-500 text-center bg-teal-50 hover:bg-teal-100  rounded-xl border-2 border-teal-500 flex-1 ${currentSection === "encode" ? "bg-teal-100 " : ""} py-3 text-(--black-light) font-medium`}
         >
           Encode
         </button>
         <button
           onClick={() => setCurrentSection("decode")}
-          className={`text-base text-center flex-1 ${currentSection === "decode" ? "border-b-2 border-b-(--blue)" : ""} py-3 text-(--black-light) font-medium`}
+          className={`text-base text-teal-500 text-center bg-teal-50 hover:bg-teal-100  rounded-xl border-2 border-teal-500 flex-1 ${currentSection === "decode" ? "bg-teal-100" : ""} py-3 text-(--black-light) font-medium`}
         >
           Decode
         </button>
