@@ -11,13 +11,13 @@ const EncodeSection = () => {
 
   const imageInputRef = useRef<HTMLInputElement>(null);
   const [maxMessageLength, setMaxMessageLength] = useState(
-    formInfo.image?.[0]?.size && formInfo.image?.[0]?.size - 88 > 0 ? formInfo.image?.[0]?.size - 88 : 0
+    formInfo.image?.[0]?.size && formInfo.image?.[0]?.size - 88 - 512 > 0 ? formInfo.image?.[0]?.size - 88 - 512 : 0
   );
 
   useEffect(() => {
     const setM = () => {
       setMaxMessageLength(
-        formInfo.image?.[0]?.size && formInfo.image?.[0]?.size - 88 > 0 ? formInfo.image?.[0]?.size - 88 : 0
+        formInfo.image?.[0]?.size && formInfo.image?.[0]?.size - 88 - 512 > 0 ? formInfo.image?.[0]?.size - 88 - 512 : 0
       );
     };
     setM();

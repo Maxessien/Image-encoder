@@ -36,7 +36,7 @@ async function encodeImage(imagePath: string, message: string) {
     info: { width, height, channels },
   } = await sharp(imagePath).raw().toBuffer({ resolveWithObject: true });
   // Keep the first 512 bytes untouched; embed data after this offset.
-  const imageBytes = originalBytes;
+  const imageBytes = Buffer.from(originalBytes.subarray(512));
   const wordBits = convertTextToBits(message);
   const magic = convertTextToBits("MAXSTEG");
 
@@ -71,7 +71,7 @@ async function decodeImage(imagePath: string) {
     .raw()
     .toBuffer({ resolveWithObject: true });
   // Read from the same offset used while encoding.
-  const imageBytes = originalBytes;
+  const imageBytes = Buffer.from(originalBytes.subarray(512));
 
   const magic =
     Array.from(imageBytes?.subarray(0, 56))
