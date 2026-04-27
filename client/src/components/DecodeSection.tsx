@@ -64,19 +64,11 @@ const DecodeSection = () => {
               type="file"
             />
             <div className="w-full h-52 border-2 border-[#ddd] border-dashed rounded-md overflow-hidden">
-              <img
-                src={
-                  formInfo.image?.length > 0 && formInfo.image instanceof FileList
-                    ? URL.createObjectURL(formInfo.image?.[0])
-                    : ""
-                }
+              {formInfo.image?.length > 0 && formInfo.image instanceof FileList && <img
+                src={URL.createObjectURL(formInfo.image?.[0])}
                 className="object-cover w-full h-full object-center"
-                alt={
-                  formInfo.image?.length > 0 && formInfo.image instanceof FileList
-                    ? formInfo.image?.[0].name
-                    : "image"
-                }
-              />
+                alt={formInfo.image?.[0]?.name}
+              />}
             </div>
 
             <button

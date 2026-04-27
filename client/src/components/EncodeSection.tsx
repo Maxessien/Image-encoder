@@ -11,13 +11,13 @@ const EncodeSection = () => {
 
   const imageInputRef = useRef<HTMLInputElement>(null);
   const [maxMessageLength, setMaxMessageLength] = useState(
-    formInfo.image?.[0].size - 88 > 0 ? formInfo.image?.[0].size - 88 : 0,
+    formInfo.image?.[0]?.size && formInfo.image?.[0]?.size - 88 > 0 ? formInfo.image?.[0]?.size - 88 : 0
   );
 
   useEffect(() => {
     const setM = () => {
       setMaxMessageLength(
-        formInfo.image?.[0].size - 88 > 0 ? formInfo.image?.[0].size - 88 : 0,
+        formInfo.image?.[0]?.size && formInfo.image?.[0]?.size - 88 > 0 ? formInfo.image?.[0]?.size - 88 : 0
       );
     };
     setM();
@@ -79,19 +79,11 @@ const EncodeSection = () => {
             type="file"
           />
           <div className="w-full h-52 border-2 border-[#ddd] border-dashed rounded-md overflow-hidden">
-            <img
-              src={
-                formInfo.image?.length > 0 && formInfo.image instanceof FileList
-                  ? URL.createObjectURL(formInfo.image?.[0])
-                  : ""
-              }
+            {formInfo.image?.length > 0 && formInfo.image instanceof FileList && <img
+              src={URL.createObjectURL(formInfo.image?.[0])}
               className="object-cover w-full h-full object-center"
-              alt={
-                formInfo.image?.length > 0 && formInfo.image instanceof FileList
-                  ? formInfo.image?.[0].name
-                  : "image"
-              }
-            />
+              alt={formInfo.image?.[0]?.name}
+            />}
           </div>
         </div>
         <div className="flex-1">

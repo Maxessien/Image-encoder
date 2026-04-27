@@ -1,4 +1,4 @@
-# Image Encoder
+# Pixel Cipher
 
 A full-stack TypeScript app that hides text inside images (encode) and reads hidden text back out (decode) using a simple LSB-based steganography flow.
 

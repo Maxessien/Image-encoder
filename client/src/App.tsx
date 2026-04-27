@@ -6,15 +6,20 @@ import { ToastContainer } from "react-toastify";
 
 const App = () => {
   const [currentSection, setCurrentSection] = useState<"encode" | "decode">(
-    "decode",
+    "encode",
   );
   return (
     <section className="bg-(--white) shadow-[0px_0px_10px_-6px_black] w-full max-w-200 h-max mx-auto py-7 my-5 rounded-md">
       <header className="mb-3">
-        <h1 className="text-center mb-2 text-(--black-light) font-medium sm: text-[20px] md: text-[30px] lg: text-[40px]">
-          Image Text Encoder
-        </h1>
-        <p className="text-base text-center text-(--black-light) font-medium">
+        <div className="flex items-center justify-center gap-2">
+          <div className="bg-teal-900 p-2.5 inline-flex items-center justify-center rounded-md">
+            <img className="w-10" src="/pixelcipher.png" alt="logo" />
+          </div>
+          <h1 className="text-center mb-2 text-(--black-light) font-medium sm: text-[20px] md:text-[30px] lg:text-[40px]">
+            Pixel Cipher
+          </h1>
+        </div>
+        <p className="text-base  md:text-[20px] lg:text-[26px] text-center text-(--black-light) font-medium">
           Hide and reveal message in your images
         </p>
       </header>
