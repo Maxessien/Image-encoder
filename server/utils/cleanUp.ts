@@ -4,7 +4,7 @@ const cleanUpStorage = async(path: string)=>{
     try {
         await unlink(path)
     } catch (err) {
-        console.log("")
+        console.error("Error deleting file:", err)
     }
 }
 
