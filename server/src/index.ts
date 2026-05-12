@@ -22,7 +22,7 @@ const app = express()
 app.use(express.json())
 
 
-app.use(express.static(join(__dirname, "../../client/dist")));
+app.use(express.static(join(__dirname, "public")));
 
 // Accept multipart image uploads for steganography operations.
 app.post("/encode", upload.single("image"), encodeTextInImage)
@@ -30,7 +30,7 @@ app.post("/decode",  upload.single("image"), decodeTextInImage)
 
 
 // Serve SPA entry file for direct browser access.
-app.get("*", async(req: Request, res: Response)=>res.sendFile(join(__dirname, "../../client/dist/index.html")))
+app.get("*", async(req: Request, res: Response)=>res.sendFile(join(__dirname, "public/index.html")))
 
 const port = Number(process.env.PORT) || 5050
 
