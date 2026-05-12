@@ -19,10 +19,10 @@ const app = express()
 app.use(express.json())
 
 
-app.use(express.static(join(process.cwd(), "../../client/dist")));
+app.use(express.static(join(process.cwd(), "../client/dist")));
 
 // Serve SPA entry file for direct browser access.
-app.get("/", async(req: Request, res: Response)=>res.sendFile(join(process.cwd(), "../../client/dist/index.html")))
+app.get("/", async(req: Request, res: Response)=>res.sendFile(join(process.cwd(), "../client/dist/index.html")))
 
 // Accept multipart image uploads for steganography operations.
 app.post("/encode", upload.single("image"), encodeTextInImage)
