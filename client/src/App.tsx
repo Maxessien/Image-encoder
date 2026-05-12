@@ -4,6 +4,8 @@ import "./assets/variables.css";
 import DecodeSection from "./components/DecodeSection";
 import DownloadPopup from "./components/DownloadPopup";
 import EncodeSection from "./components/EncodeSection";
+import { useQuery } from "@tanstack/react-query";
+import { GITHUB_RELEASES_API_URL, parseDownloadUrls, type GithubReleaseResponse } from "./utils";
 
 // Icons
 const DownloadIcon = () => (
@@ -15,9 +17,21 @@ const App = () => {
     "encode",
   );
   const [showPopup, setShowPopup] = useState(false);
+
+  const {data, isFetched, isFetching} = useQuery({
+    queryKey: ["get_release"],
+    queryFn: async ()=>{
+      const res = await fetch(GITHUB_RELEASES_API_URL)
+      const json: GithubReleaseResponse = await res.json()
+      const urls = json.assets.map((item)=> item["browser_download_url"])
+      return parseDownloadUrls(urls)
+    },
+    refetchOnWindowFocus: false,
+    staleTime: Infinity
+  })
   return (
     <main className="min-h-screen bg-gray-50 flex items-center justify-center p-4 sm:p-8 font-sans selection:bg-teal-200">
-      {showPopup && <DownloadPopup closePopup={() => setShowPopup(false)} />}
+      {showPopup && data && data.length > 0 && isFetched && <DownloadPopup parsedUrls={data} closePopup={() => setShowPopup(false)} />}
       
       <div className="bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] w-full max-w-4xl mx-auto rounded-3xl overflow-hidden border border-gray-100">
         <header className="px-6 py-8 sm:px-10 border-b border-gray-100 bg-white relative">
@@ -40,8 +54,9 @@ const App = () => {
             </div>
             
             <button
+              disabled={isFetching || !data || !(data.length > 0)}
               onClick={() => setShowPopup(true)}
-              className="group hidden sm:flex items-center gap-2 text-white bg-gray-900 hover:bg-gray-800 transition-all duration-200 font-semibold px-5 py-2.5 rounded-full shadow-sm active:scale-95"
+              className="group hidden sm:flex items-center disabled:opacity-60 gap-2 text-white bg-gray-900 hover:bg-gray-800 transition-all duration-200 font-semibold px-5 py-2.5 rounded-full shadow-sm active:scale-95"
             >
               <DownloadIcon />
               <span>Install App</span>
