@@ -190,11 +190,13 @@ const DownloadPopup = ({
 
         <div className="px-6 py-2 overflow-y-auto">
           <PlatformSection title="Android" icon={<AndroidIcon />}>
-            <DownloadItem
-              link="https://github.com/Maxessien/PixelCipherTauri/releases/download/v0.1.0/Pixel.Cipher.apk"
-              fileName="PixelCipher.apk"
-            />
+            {parsedUrls
+              .filter(({ platform }) => platform === "Android")
+              .map(({ customName, url }) => (
+                <DownloadItem fileName={customName} link={url} />
+              ))}
           </PlatformSection>
+
           <PlatformSection title="Windows" icon={<WindowsIcon />}>
             {parsedUrls
               .filter(({ platform }) => platform === "Windows")
